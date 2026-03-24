@@ -21,13 +21,20 @@ app.use(cors({
     "http://localhost:5173",
     "https://chat-project-three-rho.vercel.app"
   ],
-  credentials: true 
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "Cookie"]
 }));
 
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
+
+// Health check
+app.get("/health", (req, res) => {
+  res.json({ status: "ok" });
+});
 
 // Make ready for deployment
 if (ENV.NODE_ENV === "production") {

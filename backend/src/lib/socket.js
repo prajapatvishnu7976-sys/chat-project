@@ -9,8 +9,12 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: [ENV.CLIENT_URL],
+    origin: [
+      "http://localhost:5173",
+      "https://chat-project-three-rho.vercel.app"
+    ],
     credentials: true,
+    methods: ["GET", "POST"]
   },
 });
 
@@ -22,7 +26,7 @@ export function getReceiverSocketId(userId) {
   return userSocketMap[userId];
 }
 
-// this is for storig online users
+// this is for storing online users
 const userSocketMap = {}; // {userId:socketId}
 
 io.on("connection", (socket) => {
